@@ -29,6 +29,21 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
+  jobs: {
+    tasks: [
+      {
+        slug: 'test-task',
+        handler: path.resolve(dirname, 'tasks/test-task.ts') + '#taskHandler',
+        inputSchema: [
+          {
+            name: 'text',
+            type: 'text',
+            required: true,
+          },
+        ],
+      },
+    ],
+  },
   sharp,
   plugins: [
     payloadCloudPlugin(),

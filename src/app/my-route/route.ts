@@ -6,9 +6,14 @@ export const GET = async () => {
     config: configPromise,
   })
 
-  const data = await payload.find({
-    collection: 'users',
+  await payload.jobs.queue({
+    input: {
+      text: 'Hello, world!',
+    },
+    task: 'test-task',
   })
 
-  return Response.json(data)
+  await payload.jobs.run()
+
+  return Response.json({ message: 'Starting test-task job' })
 }
